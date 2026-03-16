@@ -28,43 +28,35 @@ This project is part of a learning journey focused on:
 - terminal-based interfaces
 - market microstructure experimentation
 
-             ┌────────────┐
-Market Data →│            │
-Keyboard  →  │  AppState  │ → UI
-Timers    →  │            │
-             └────────────┘
-
-AppState
- │
- ├── market_prices
- │       │
- │       ├── BTCUSDT → PriceData
- │       ├── ETHUSDT → PriceData
- │       └── MES → PriceData
- │
- └── last_update
-
-Architecture
-
-             WebSocket Task
-                 │
-                 ▼
-           Price Update
-                 │
-                 ▼
-              Channel
-                 │
-                 ▼
-          Main App Loop
-                 │
-                 ▼
-              AppState
-                 │
-                 ▼
-                UI
-
 ## Future Ideas
 
 - order book visualization
 - market replay engine
 - trading signal prototyping
+
+
+
+## Architecture
+
+              WebSocket
+                  │
+                  ▼
+           Event::PriceUpdate
+                  │
+                  │
+Keyboard ──→ Event::KeyPress
+                  │
+                  │
+Timer ─────→ Event::Tick
+                  │
+                  ▼
+            Event Channel
+                  │
+                  ▼
+           App Event Loop
+                  │
+                  ▼
+               AppState
+                  │
+                  ▼
+                  UI
